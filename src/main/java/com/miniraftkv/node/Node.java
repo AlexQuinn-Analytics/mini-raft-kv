@@ -102,26 +102,20 @@ public class Node {
         }
     }
     public static void main(String[] args) throws IOException, InterruptedException {
-    
-    Node node1 = new Node("Node1", 5001);
-    node1.printStatus();
+
+    Node node1 = new Node("Node1", 5001, Arrays.asList("localhost:5002", "localhost:5003"));
+    Node node2 = new Node("Node2", 5002, Arrays.asList("localhost:5001", "localhost:5003"));
+    Node node3 = new Node("Node3", 5003, Arrays.asList("localhost:5001", "localhost:5002"));
+
     node1.start();
+    node2.start();
+    node3.start();
 
     Thread.sleep(1000);
-        
-    RaftClient client = new RaftClient("localhost", 5001);
 
-    System.out.println("\n--- Testing RequestVote ---");
-    RequestVoteResponse voteResponse = client.sendRequestVote("Node2", 1);
-    System.out.println("Got vote response: term=" + voteResponse.getTerm() 
-        + ", voteGranted=" + voteResponse.getVoteGranted());
-
-    System.out.println("\n--- Testing AppendEntries ---");
-    AppendEntriesResponse appendResponse = client.sendAppendEntries("Node2", 1);
-    System.out.println("Got append response: term=" + appendResponse.getTerm() 
-        + ", success=" + appendResponse.getSuccess());
-
-    client.shutdown();
+    node1.resetElectionTimer();
+    node2.resetElectionTimer();
+    node3.resetElectionTimer();
 
     node1.blockUntilShutdown();
     }
