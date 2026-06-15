@@ -1,4 +1,4 @@
-package miniraftkv.node;
+package com.miniraftkv.node;
 
 import java.io.IOException;
 import java.util.Arrays;
