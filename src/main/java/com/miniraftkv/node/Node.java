@@ -78,6 +78,15 @@ public class Node {
 
     }
 
+    public void startHeartbeat(){
+        scheduler.scheduleAtFixedRate(
+            ()->sendHeartbeats(),
+            0,
+            100,
+            TimeUnit.MILLISECONDS
+        );
+    }
+
     public void requestVoteFromPeer(String peer){
         try{
             String[] parts = peer.split(":");
