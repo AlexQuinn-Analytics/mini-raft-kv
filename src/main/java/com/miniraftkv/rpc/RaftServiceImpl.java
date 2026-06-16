@@ -4,6 +4,7 @@ import com.miniraftkv.node.Node;
 
 public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     private final String nodeId;
+    private final Node node;
     public RaftServiceImpl(String nodeId, Node node){
         this.nodeId = nodeId;
         this.node = node;
