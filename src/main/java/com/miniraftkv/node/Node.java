@@ -136,6 +136,14 @@ public class Node {
         }
     }
 
+    public void onHeartbeat(long leaderTerm){
+        if (leaderTerm >= currentTerm){
+            state = NodeState.FOLLOWER;
+            currentTerm = leaderTerm;
+            resetElectionTimer();
+        }
+    }
+
     public void blockUntilShutdown() throws InterruptedException{
         if (server!=null){
             server.awaitTermination();
