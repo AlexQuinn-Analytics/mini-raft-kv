@@ -1,5 +1,7 @@
 package com.miniraftkv.rpc;
 import io.grpc.stub.StreamObserver;
+import com.miniraftkv.node.Node;
+
 public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     private final String nodeId;
     public RaftServiceImpl(String nodeId){
