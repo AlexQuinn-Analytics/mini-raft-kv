@@ -87,6 +87,15 @@ public class Node {
         );
     }
 
+    public void sendHeartbeats(){
+        if (state != NodeState.LEADER){
+            return;
+        }
+        for (String peer:peers){
+            sendHeartbeatToPeer(peer);
+        }
+    }
+
     public void requestVoteFromPeer(String peer){
         try{
             String[] parts = peer.split(":");
