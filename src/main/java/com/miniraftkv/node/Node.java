@@ -96,6 +96,19 @@ public class Node {
         }
     }
 
+    public void sendHeartbeatToPeer(String peer){
+        try{
+            String[] parts = peer.split(":");
+            String host = parts[0];
+            int peerPort = Integer.parseInt(parts[1]);
+            RaftClient client = new RaftClient(host, peerPort);
+            client.sendAppendEntries(nodeId, currentTerm);
+            client.shutdown();
+        }catch(Exception e){
+
+        }
+    }
+
     public void requestVoteFromPeer(String peer){
         try{
             String[] parts = peer.split(":");
