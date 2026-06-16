@@ -47,7 +47,7 @@ public class Node {
 
     public void start() throws IOException{
         server =  ServerBuilder.forPort(port)
-        .addService(new RaftServiceImpl(nodeId))
+        .addService(new RaftServiceImpl(nodeId, this))
         .build()
         .start();
         System.out.println("[" + nodeId +"] gRPC Server started, listening on port " + port);
