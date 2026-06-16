@@ -21,6 +21,7 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     @Override
     public void appendEntries(AppendEntriesRequest request, StreamObserver<AppendEntriesResponse> responseObserver){
         System.out.println("[" + nodeId + "] Received AppendEntries from " + request.getLeaderId() + ", term=" + request.getTerm());
+        node.onHeartbeat(request.getTerm());
         AppendEntriesResponse response = AppendEntriesResponse.newBuilder()
         .setTerm(request.getTerm())
         .setSuccess(true)
