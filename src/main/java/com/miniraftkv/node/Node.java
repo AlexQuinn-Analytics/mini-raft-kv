@@ -65,6 +65,15 @@ public class Node {
         );
     }
 
+    public void becomeLeader(){
+        state = NodeState.LEADER;
+        System.out.println("[" + nodeId +"] 🎉 Became LEADER for term" + currentTerm + "!");
+        if (electionTimer != null){
+            electionTimer.cancel(false);
+        }
+        startHeartbeat();
+    }
+
     public void startElection(){
         state = NodeState.CANDIDATE;
         currentTerm++;
