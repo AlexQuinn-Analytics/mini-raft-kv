@@ -4,8 +4,9 @@ import com.miniraftkv.node.Node;
 
 public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     private final String nodeId;
-    public RaftServiceImpl(String nodeId){
+    public RaftServiceImpl(String nodeId, Node node){
         this.nodeId = nodeId;
+        this.node = node;
     }
     @Override
     public void requestVote(RequestVoteRequest request, StreamObserver<RequestVoteResponse> responseObserver){
