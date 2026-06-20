@@ -107,16 +107,17 @@ public class Node {
         }
     }
 
-    public void sendHeartbeatToPeer(String peer){
+    public boolean sendHeartbeatToPeer(String peer){
         try{
             String[] parts = peer.split(":");
             String host = parts[0];
             int peerPort = Integer.parseInt(parts[1]);
             RaftClient client = new RaftClient(host, peerPort);
-            client.sendAppendEntries(nodeId, currentTerm);
+            AppendEntriesResponse response = client.sendAppendEntries(nodeId, currentTerm, log);
             client.shutdown();
+            return response.getSuccess();
         }catch(Exception e){
-
+            return false;
         }
     }
 
