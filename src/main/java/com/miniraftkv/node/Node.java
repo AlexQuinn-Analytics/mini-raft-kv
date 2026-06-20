@@ -102,8 +102,19 @@ public class Node {
         if (state != NodeState.LEADER){
             return;
         }
+        int successCount = 1;
+
         for (String peer:peers){
-            sendHeartbeatToPeer(peer);
+            boolean success = sendHeartbeatToPeer(peer);
+            if (success){
+                successCount++;
+            }
+        }
+        if (successCount > (peers.size()+1)/2){
+            if (commitIndex < log.size()){
+                commitIndex = log.size();
+                System.out.println("[" + nodeId + "] Committed up to index" + commitIndex);
+            }
         }
     }
 
