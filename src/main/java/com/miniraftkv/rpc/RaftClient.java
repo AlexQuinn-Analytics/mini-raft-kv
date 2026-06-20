@@ -2,6 +2,9 @@ package com.miniraftkv.rpc;
 
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
+import java.util.List;
+import com.miniraftkv.log.LogEntry;
+
 public class RaftClient {
     private final ManagedChannel channel;
     private final RaftServiceGrpc.RaftServiceBlockingStub stub;
@@ -25,16 +28,22 @@ public class RaftClient {
         return stub.requestVote(request);
     }
 
-    public AppendEntriesResponse sendAppendEntries(String leaderId, long term){
-        AppendEntriesRequest request=AppendEntriesRequest.newBuilder()
+    public AppendEntriesResponse sendAppendEntries(String leaderId, long term, List<LogEntry>entries){
+        AppendEntriesRequest.Builder builder=AppendEntriesRequest.newBuilder()
         .setTerm(term)
         .setLeaderId(leaderId)
         .setPrevLogIndex(0)
         .setPrevLogTerm(0)
-        .setLeaderCommit(0)
-        .build();
+        .setLeaderCommit(0);
 
-        return stub.appendEntries(request);
+        for (LogEntry entry:entries){
+            com.miniraftkv.rpc.LogEntry protoEntry = com.miniraftkv.rpc.LogEntry.newBuilder()
+            .setTerm(entry.getTerm())
+            .setCommand(entry.getCommand())
+            .build();
+            builder.addEntries(protoEntry);
+        }
+        return stub.appendEntries(builder.build());
     }
     public void shutdown() {
         channel.shutdown();
