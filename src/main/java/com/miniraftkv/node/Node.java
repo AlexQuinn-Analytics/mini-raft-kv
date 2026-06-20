@@ -29,6 +29,8 @@ public class Node {
     private final Random random = new Random();
     private List<String> peers;
     private int voteCount;
+    private List<LogEntry> log = new ArrayList<>();
+    private int commitIndex = 0;
 
     
     public Node(String nodeId, int port, List<String> peers) {
