@@ -157,6 +157,16 @@ public class Node {
         System.out.println("[" + nodeId + "] Appended:" + entry);
     }
 
+    public void handleAppendEntries(List<com.miniraftkv.rpc.LogEntry> protoEntries){
+        if (protoEntries.isEmpty()) return;
+        for (com.miniraftkv.rpc.LogEntry protoEntry:protoEntries){
+            int newIndex = log.size() + 1;
+            LogEntry entry = new LogEntry(protoEntry.getTerm(), newIndex, protoEntry.getCommand());
+            log.add(entry);
+            System.out.println("[" + nodeId + "] Replicated:" + entry);
+        }
+    }
+
     public void blockUntilShutdown() throws InterruptedException{
         if (server!=null){
             server.awaitTermination();
