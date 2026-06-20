@@ -1,6 +1,7 @@
 package com.miniraftkv.rpc;
-import io.grpc.stub.StreamObserver;
 import com.miniraftkv.node.Node;
+
+import io.grpc.stub.StreamObserver;
 
 public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     private final String nodeId;
@@ -23,6 +24,7 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     public void appendEntries(AppendEntriesRequest request, StreamObserver<AppendEntriesResponse> responseObserver){
         System.out.println("[" + nodeId + "] Received AppendEntries from " + request.getLeaderId() + ", term=" + request.getTerm());
         node.onHeartbeat(request.getTerm());
+        node.handleAppendEntries(request.getEntriesList());
         AppendEntriesResponse response = AppendEntriesResponse.newBuilder()
         .setTerm(request.getTerm())
         .setSuccess(true)
