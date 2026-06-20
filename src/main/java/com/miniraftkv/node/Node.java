@@ -146,6 +146,17 @@ public class Node {
         }
     }
 
+    public void appendCommand(String command){
+        if (state != NodeState.LEADER){
+            System.out.println("[" + nodeId + "] Not leader, cannot append command");
+            return;
+        }
+        int newIndex = log.size() + 1;
+        LogEntry entry = new LogEntry(currentTerm, newIndex, command);
+        log.add(entry);
+        System.out.println("[" + nodeId + "] Appended:" + entry);
+    }
+
     public void blockUntilShutdown() throws InterruptedException{
         if (server!=null){
             server.awaitTermination();
