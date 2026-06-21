@@ -126,7 +126,7 @@ public class Node {
             String host = parts[0];
             int peerPort = Integer.parseInt(parts[1]);
             RaftClient client = new RaftClient(host, peerPort);
-            AppendEntriesResponse response = client.sendAppendEntries(nodeId, currentTerm, log);
+            AppendEntriesResponse response = client.sendAppendEntries(nodeId, currentTerm, log, prevLogIndex, prevLogTerm);
             client.shutdown();
             return response.getSuccess();
         }catch(Exception e){
