@@ -31,6 +31,8 @@ public class Node {
     private int voteCount;
     private List<LogEntry> log = new ArrayList<>();
     private int commitIndex = 0;
+    private Map<String, String> kvStore = new HashMap<>();
+    private int lastApplied = 0;
 
     
     public Node(String nodeId, int port, List<String> peers) {
