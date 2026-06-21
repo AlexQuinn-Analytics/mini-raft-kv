@@ -181,6 +181,24 @@ public class Node {
         }
     }
 
+    public void applyLog(){
+        while (lastApplied < commitIndex){
+            lastApplied++;
+            LogEntry entry = log.get(lastApplied - 1);
+            applyToStateMachine(entry.getCommand(
+            ));
+            System.out.println("[" + nodeId + "] Applied" + entry.getCommand());
+        }
+    }
+
+    public void applyToStateMachine(String command){
+        String[] parts = command.split(" ");
+        if (parts[0].equals("set")){
+            String[] kv = parts[1].split("=");
+            kvStore.put(kv[0], kv[1]);
+        }
+    }
+
     public void blockUntilShutdown() throws InterruptedException{
         if (server!=null){
             server.awaitTermination();
