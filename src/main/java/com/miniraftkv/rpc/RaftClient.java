@@ -28,12 +28,12 @@ public class RaftClient {
         return stub.requestVote(request);
     }
 
-    public AppendEntriesResponse sendAppendEntries(String leaderId, long term, List<LogEntry>entries){
+    public AppendEntriesResponse sendAppendEntries(String leaderId, long term, List<LogEntry>entries, int prevLogIndex, long prevLogTerm){
         AppendEntriesRequest.Builder builder=AppendEntriesRequest.newBuilder()
         .setTerm(term)
         .setLeaderId(leaderId)
-        .setPrevLogIndex(0)
-        .setPrevLogTerm(0)
+        .setPrevLogIndex(prevLogIndex)
+        .setPrevLogTerm(prevLogTerm)
         .setLeaderCommit(0);
 
         for (LogEntry entry:entries){
