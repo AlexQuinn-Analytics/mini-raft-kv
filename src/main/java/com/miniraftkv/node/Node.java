@@ -172,13 +172,17 @@ public class Node {
     }
 
     public void handleAppendEntries(List<com.miniraftkv.rpc.LogEntry> protoEntries){
-        if (protoEntries.isEmpty()) return;
-        for (com.miniraftkv.rpc.LogEntry protoEntry:protoEntries){
-            int newIndex = log.size() + 1;
-            LogEntry entry = new LogEntry(protoEntry.getTerm(), newIndex, protoEntry.getCommand());
-            log.add(entry);
-            System.out.println("[" + nodeId + "] Replicated:" + entry);
-        }
+    if (protoEntries.isEmpty()) return;
+
+    for (int i = 0; i < protoEntries.size(); i++){
+        int index = i + 1;
+        if (index <= log.size()) continue;   
+
+        com.miniraftkv.rpc.LogEntry protoEntry = protoEntries.get(i);  
+        LogEntry entry = new LogEntry(protoEntry.getTerm(), index, protoEntry.getCommand());
+        log.add(entry);
+        System.out.println("[" + nodeId + "] Replicated:" + entry);
+    }
     }
 
     public void applyLog(){
