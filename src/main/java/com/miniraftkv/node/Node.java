@@ -173,15 +173,24 @@ public class Node {
 
     public void handleAppendEntries(List<com.miniraftkv.rpc.LogEntry> protoEntries){
     if (protoEntries.isEmpty()) return;
-
     for (int i = 0; i < protoEntries.size(); i++){
-        int index = i + 1;
-        if (index <= log.size()) continue;   
-
-        com.miniraftkv.rpc.LogEntry protoEntry = protoEntries.get(i);  
-        LogEntry entry = new LogEntry(protoEntry.getTerm(), index, protoEntry.getCommand());
-        log.add(entry);
-        System.out.println("[" + nodeId + "] Replicated:" + entry);
+        int index = i + 1; 
+        com.miniraftkv.rpc.LogEntry protoEntry = protoEntries.get(i);   // 取当前日志
+        if (index <= log.size()) {
+            LogEntry existing = log.get(index - 1);
+            if (existing.getTerm() != protoEntry.getTerm()){
+                while (log.size() >= index) {
+                    log.remove(log.size() - 1);
+                }
+                LogEntry entry = new LogEntry(protoEntry.getTerm(), index, protoEntry.getCommand());
+                log.add(entry);
+                System.out.println("[" + nodeId + "] Conflict at index " + index + ", replaced");
+            }    
+        } else {
+            LogEntry entry = new LogEntry(protoEntry.getTerm(), index, protoEntry.getCommand());
+            log.add(entry);
+            System.out.println("[" + nodeId + "] Replicated:" + entry);
+        }
     }
     }
 
