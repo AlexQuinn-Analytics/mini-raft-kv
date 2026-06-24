@@ -83,6 +83,7 @@ public class Node {
         currentTerm++;
         votedFor = nodeId;
         voteCount = 1;
+        persist();
         System.out.println("[" + nodeId + "] Became CANDIDATE, term =" + currentTerm + ", requesting votes from peers...");
         for (String peer:peers){
             requestVoteFromPeer(peer);
