@@ -217,6 +217,21 @@ public class Node {
             server.awaitTermination();
         }
     }
+
+    public void persist(){
+        try {
+            FileWriter writer = new FileWriter("node_" + nodeId + ".txt");
+            writer.write(currentTerm + "\n");
+            writer.write((votedFor == null? "null" : votedFor) + "\n");
+            for (LogEntry entry : log){
+                writer.write(entry.getTerm() + "," + entry.getCommand() + "\n");
+            }
+            writer.close();
+        } catch (Exception e){
+            System.out.println("[" + nodeId + "] Persist failed: " + e.getMessage());
+        }
+    }
+    
     public static void main(String[] args) throws IOException, InterruptedException {
 
     Node node1 = new Node("Node1", 5001, Arrays.asList("localhost:5002", "localhost:5003"));
