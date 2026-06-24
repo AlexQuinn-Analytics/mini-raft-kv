@@ -169,6 +169,7 @@ public class Node {
         int newIndex = log.size() + 1;
         LogEntry entry = new LogEntry(currentTerm, newIndex, command);
         log.add(entry);
+        persist();
         System.out.println("[" + nodeId + "] Appended:" + entry);
     }
 
