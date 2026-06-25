@@ -238,6 +238,32 @@ public class Node {
         }
     }
 
+    public void loadState() {
+        try {
+            File file = new File("node_" + nodeId + ".txt");
+            if (!file.exists()) {
+                return;
+            }
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            currentTerm = Long.parseLong(reader.readLine());
+            String votedForLine = reader.readLine();
+            votedFor = votedForLine.equals("null")? null : votedForLine;
+            String line;
+            int index = 1;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("," , 2);
+                long term = Long.parseLong(parts[0]);
+                String command = parts[1];
+                log.add(new LogEntry(term, index, command));
+                index++;
+            }
+            reader.close();
+            System.out.println("[" + nodeId + "] Recovered: term=" + currentTerm + ", votedFor=" + votedFor + ", log size =" + log.size());
+        }catch (Exception e) {
+            System.out.println("[" + nodeId + "] Load failed: " + e.getMessage());
+        }
+    }
+    
     public boolean handleRequestVote(long candidateTerm, String candidateId) {
         if (candidateTerm < currentTerm) {
             return false;
