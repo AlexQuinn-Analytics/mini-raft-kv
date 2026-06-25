@@ -46,7 +46,7 @@ public class Node {
         this.peers = peers;
         this.state = NodeState.FOLLOWER;
         this.votedFor = null;
-        this.scheduler = Executors.newScheduledThreadPool(1);
+        this.scheduler = Executors.newScheduledThreadPool(4);
     }
     
     public void printStatus() {
