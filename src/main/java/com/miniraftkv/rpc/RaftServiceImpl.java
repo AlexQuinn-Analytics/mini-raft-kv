@@ -15,7 +15,7 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
         boolean granted = node.handleRequestVote(request.getTerm(), request.getCandidateId());
         RequestVoteResponse response = RequestVoteResponse.newBuilder()
         .setTerm(request.getTerm())
-        .setVoteGranted(true)
+        .setVoteGranted(granted)
         .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
