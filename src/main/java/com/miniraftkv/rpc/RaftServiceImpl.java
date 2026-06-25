@@ -12,6 +12,7 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     }
     @Override
     public void requestVote(RequestVoteRequest request, StreamObserver<RequestVoteResponse> responseObserver){
+        boolean granted = node.handleRequestVote(request.getTerm(), request.getCandidateId());
         RequestVoteResponse response = RequestVoteResponse.newBuilder()
         .setTerm(request.getTerm())
         .setVoteGranted(true)
