@@ -237,6 +237,10 @@ public class Node {
             System.out.println("[" + nodeId + "] Persist failed: " + e.getMessage());
         }
     }
+
+    public long getCurrentTerm(){
+        return currentTerm;
+    }
     
     public static void main(String[] args) throws IOException, InterruptedException {
 
