@@ -12,7 +12,6 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
     }
     @Override
     public void requestVote(RequestVoteRequest request, StreamObserver<RequestVoteResponse> responseObserver){
-        System.out.println("[" + nodeId + "] Received RequestVote from " + request.getCandidateId() + ", term=" + request.getTerm());
         RequestVoteResponse response = RequestVoteResponse.newBuilder()
         .setTerm(request.getTerm())
         .setVoteGranted(true)
