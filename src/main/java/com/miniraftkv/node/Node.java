@@ -47,6 +47,7 @@ public class Node {
         this.state = NodeState.FOLLOWER;
         this.votedFor = null;
         this.scheduler = Executors.newScheduledThreadPool(4);
+        loadState();
     }
     
     public void printStatus() {
