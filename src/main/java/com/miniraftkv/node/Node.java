@@ -92,7 +92,9 @@ public class Node {
         for (String peer:peers){
             requestVoteFromPeer(peer);
         }
+        if (state == NodeState.CANDIDATE) {
         resetElectionTimer();
+        }
 
     }
 
