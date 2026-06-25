@@ -238,6 +238,27 @@ public class Node {
         }
     }
 
+    public boolean handleRequestVote(long candidateTerm, String candidateId) {
+        if (candidateTerm < currentTerm) {
+            return false;
+        }
+
+        if (candidateTerm > currentTerm) {
+            state = NodeState.FOLLOWER;
+            currentTerm = candidateTerm;
+            votedFor = null;
+        }
+        
+        if (votedFor == null || votedFor.equals(candidateId)){
+            votedFor = candidateId;
+            persist();
+            resetElectionTimer();
+            return true;
+        }
+
+        return false;
+    }
+
     public long getCurrentTerm(){
         return currentTerm;
     }
