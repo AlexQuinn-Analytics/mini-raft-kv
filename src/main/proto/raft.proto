@@ -50,4 +50,5 @@ message AppendEntriesResponse {
 service RaftService {
     rpc RequestVote(RequestVoteRequest) returns (RequestVoteResponse);
     rpc AppendEntries(AppendEntriesRequest) returns (AppendEntriesResponse);
+    rpc ClientCommand(ClientRequest) returns (ClientResponse);
 }
