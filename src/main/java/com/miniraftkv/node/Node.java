@@ -291,6 +291,14 @@ public class Node {
     public long getCurrentTerm(){
         return currentTerm;
     }
+
+    public boolean handleClientCommand(String command) {
+        if (state != NodeState.LEADER) {
+            return false;
+        }
+        appendCommand(command);
+        return true;
+    }
     
     public static void main(String[] args) throws IOException, InterruptedException {
 
