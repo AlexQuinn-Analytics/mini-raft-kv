@@ -52,3 +52,15 @@ service RaftService {
     rpc AppendEntries(AppendEntriesRequest) returns (AppendEntriesResponse);
     rpc ClientCommand(ClientRequest) returns (ClientResponse);
 }
+
+// ===========================
+// Client RPC
+// ===========================
+message ClientRequest {
+    string command = 1;                // 命令,如 "set x=5"
+}
+
+message ClientResponse {
+    bool success = 2;                  // 是否成功
+    string leaderId = 3;               // 如果不是Leader,告诉客户端谁是Leader
+}
