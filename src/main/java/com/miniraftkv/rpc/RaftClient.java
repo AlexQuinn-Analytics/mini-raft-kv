@@ -45,7 +45,15 @@ public class RaftClient {
         }
         return stub.appendEntries(builder.build());
     }
+    
     public void shutdown() {
         channel.shutdown();
+    }
+
+    public ClientResponse sendClientCommand(String command) {
+        ClientRequest request = ClientRequest.newBuilder()
+        .setCommand(command)
+        .build();
+        return stub.clientCommand(request);
     }
 }
