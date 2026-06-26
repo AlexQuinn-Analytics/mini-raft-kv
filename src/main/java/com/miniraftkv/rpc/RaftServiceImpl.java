@@ -20,6 +20,7 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
         responseObserver.onNext(response);
         responseObserver.onCompleted();
     }  
+    
     @Override
     public void appendEntries(AppendEntriesRequest request, StreamObserver<AppendEntriesResponse> responseObserver){
         System.out.println("[" + nodeId + "] Received AppendEntries from " + request.getLeaderId() + ", term=" + request.getTerm());
@@ -31,6 +32,18 @@ public class RaftServiceImpl extends RaftServiceGrpc.RaftServiceImplBase{
         .build();
         responseObserver.onNext(response);
         responseObserver.onCompleted();
+    }
+
+    @Override
+    public void clientCommand(ClientRequest request, 
+        StreamObserver<ClientResponse> responseObserver) {
+    boolean success = node.handleClientCommand(request.getCommand());
+    
+    ClientResponse response = ClientResponse.newBuilder()
+        .setSuccess(success)
+        .build();
+    responseObserver.onNext(response);
+    responseObserver.onCompleted();
     }
 
 }
