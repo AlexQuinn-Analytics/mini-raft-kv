@@ -57,6 +57,20 @@ public class Benchmark {
             + totalRequests + " requests...");
         long startTime = System.currentTimeMillis();
         Thread[] threads = new Thread[numThreads];
+        for (int t = 0; t < numThreads; t++) {
+            final int threadId = t;
+            threads[t] = new Thread(() -> {
+                RaftClient client = new RaftClient("localhost", finalLeaderPort);
+                for (int i = 0; i < requestsPerThread; i++) {
+                    client.sendClientCommand("set key" + threadId + "_" + i + "=" + i);
+                }
+                client.shutdown();
+            });
+            threads[t].start();
+        }
+        for (Thread thread : threads) {
+            thread.join();
+        }
         
         // 5. Calculate QPS and average latency
         double qps = totalRequests * 1000.0 / duration;
