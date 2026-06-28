@@ -79,6 +79,7 @@ public class Benchmark {
         double avgLatency = (double) duration / totalRequests;
 
         System.out.println("========== Benchmark Result ==========");
+        System.out.println("Threads:        " + numThreads);
         System.out.println("Total requests: " + totalRequests);
         System.out.println("Total time:     " + duration + " ms");
         System.out.println("QPS:            " + String.format("%.2f", qps));
