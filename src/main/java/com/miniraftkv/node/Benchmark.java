@@ -38,16 +38,10 @@ public class Benchmark {
             return;
         }
         // 4. Benchmark: send a large number of commands and measure time
-        int totalRequests = 1000;
-        System.out.println("Starting benchmark: " + totalRequests + " requests...");
-        long startTime = System.currentTimeMillis();
-
-        for (int i = 0; i < totalRequests; i++) {
-            leaderClient.sendClientCommand("set key" + i + "=" + i);
-        }
-
-        long endTime = System.currentTimeMillis();
-        long duration = endTime - startTime;
+        int numThreads = 100;
+        int requestsPerThread = 100;
+        int totalRequests = numThreads * requestsPerThread;
+        int leaderPort = 0;
         // 5. Calculate QPS and average latency
         double qps = totalRequests * 1000.0 / duration;
         double avgLatency = (double) duration / totalRequests;
