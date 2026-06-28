@@ -52,6 +52,12 @@ public class Benchmark {
             }
             client.shutdown();
         }
+        final int finalLeaderPort = leaderPort;
+        System.out.println("Starting benchmark: " + numThreads + " threads, " 
+            + totalRequests + " requests...");
+        long startTime = System.currentTimeMillis();
+        Thread[] threads = new Thread[numThreads];
+        
         // 5. Calculate QPS and average latency
         double qps = totalRequests * 1000.0 / duration;
         double avgLatency = (double) duration / totalRequests;
