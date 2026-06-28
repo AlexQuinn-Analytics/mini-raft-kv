@@ -85,7 +85,6 @@ public class Benchmark {
         System.out.println("QPS:            " + String.format("%.2f", qps));
         System.out.println("Avg latency:    " + String.format("%.2f", avgLatency) + " ms");
 
-        leaderClient.shutdown();
         System.exit(0);
     }
 }
