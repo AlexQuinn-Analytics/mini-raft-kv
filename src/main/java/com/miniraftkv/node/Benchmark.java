@@ -71,6 +71,8 @@ public class Benchmark {
         for (Thread thread : threads) {
             thread.join();
         }
+        long endTime = System.currentTimeMillis();
+        long duration = endTime - startTime;
         
         // 5. Calculate QPS and average latency
         double qps = totalRequests * 1000.0 / duration;
