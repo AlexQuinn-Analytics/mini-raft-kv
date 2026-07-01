@@ -11,3 +11,7 @@ public class MemTable {
         this.table = new TreeMap<>();
         this.maxSize = maxSize;
     }
+
+    public void put(String key, String value) {
+        table.put(key, value);
+    }
