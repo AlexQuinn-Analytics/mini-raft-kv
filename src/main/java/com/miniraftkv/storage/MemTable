@@ -15,3 +15,7 @@ public class MemTable {
     public void put(String key, String value) {
         table.put(key, value);
     }
+
+    public String get(String key) {
+        return table.get(key);
+    }
