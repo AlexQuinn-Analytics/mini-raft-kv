@@ -23,3 +23,7 @@ public class MemTable {
     public boolean isFull() {
         return table.size() >= maxSize;
     }
+
+    public Map<String, String> getAll() {
+        return table;
+    }
