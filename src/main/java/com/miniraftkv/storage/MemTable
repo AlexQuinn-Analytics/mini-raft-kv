@@ -27,3 +27,7 @@ public class MemTable {
     public Map<String, String> getAll() {
         return table;
     }
+
+    public int size() {
+        return table.size();
+    }
