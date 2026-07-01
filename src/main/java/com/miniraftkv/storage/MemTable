@@ -31,3 +31,8 @@ public class MemTable {
     public int size() {
         return table.size();
     }
+
+    public void clear() {
+        table.clear();
+    }
+}
