@@ -6,3 +6,8 @@ import java.util.Map;
 public class MemTable {
     private TreeMap<String, String> table;
     private int maxSize;
+
+    public MemTable(int maxSize) {
+        this.table = new TreeMap<>();
+        this.maxSize = maxSize;
+    }
