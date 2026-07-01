@@ -2,3 +2,7 @@ package com.miniraftkv.storage;
 
 import java.util.TreeMap;
 import java.util.Map;
+
+public class MemTable {
+    private TreeMap<String, String> table;
+    private int maxSize;
