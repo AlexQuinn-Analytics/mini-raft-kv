@@ -19,3 +19,7 @@ public class MemTable {
     public String get(String key) {
         return table.get(key);
     }
+
+    public boolean isFull() {
+        return table.size() >= maxSize;
+    }
