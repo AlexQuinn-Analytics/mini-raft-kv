@@ -26,3 +26,20 @@ public class SSTable {
             System.out.println("[SSTable] Flush failed: " + e.getMessage());
         }
     }
+
+     // Get: read a key from this SSTable file
+    public String get(String key) {
+        try {
+            File file = new File(filename);
+            if (!file.exists()) {
+                return null;
+            }
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("=", 2);
+                if (parts[0].equals(key)) {
+                    reader.close();
+                    return parts[1];   // found
+                }
+            }
