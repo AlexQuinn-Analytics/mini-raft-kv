@@ -22,4 +22,7 @@ public class SSTable {
             writer.close()
             System.out.println("[SSTable] Flushed " + data.size() 
                 + " entries to " + filename);
+        } catch (Exception e) {
+            System.out.println("[SSTable] Flush failed: " + e.getMessage());
         }
+    }
