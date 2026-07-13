@@ -50,3 +50,8 @@ public class SSTable {
             return null;
         }
     }
+
+     public String getFilename() {
+        return filename;
+    }
+}
