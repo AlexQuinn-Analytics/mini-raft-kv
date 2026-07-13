@@ -43,3 +43,5 @@ public class SSTable {
                     return parts[1];   // found
                 }
             }
+            reader.close();
+            return null;   // not found
