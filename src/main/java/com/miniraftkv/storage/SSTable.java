@@ -45,3 +45,8 @@ public class SSTable {
             }
             reader.close();
             return null;   // not found
+            } catch (Exception e) {
+            System.out.println("[SSTable] Get failed: " + e.getMessage());
+            return null;
+        }
+    }
