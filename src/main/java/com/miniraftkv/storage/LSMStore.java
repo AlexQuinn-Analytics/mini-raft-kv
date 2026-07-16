@@ -47,3 +47,7 @@ public class LSMStore {
         }
         return null;
     }
+
+    public int getSSTableCount() {
+        return ssTables.size();
+    }
