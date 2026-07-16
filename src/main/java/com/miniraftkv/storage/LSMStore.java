@@ -51,3 +51,24 @@ public class LSMStore {
     public int getSSTableCount() {
         return ssTables.size();
     }
+
+    public void compact() {
+        TreeMap<String, String> merged = new TreeMap<>();
+        for (SSTable ssTable : ssTables) {
+            Map<String, String> data = ssTable.readAll();
+            merged.putAll(data); 
+        }
+        for (SSTable ssTable : ssTables) {
+            File file = new File(ssTable.getFilename());
+            file.delete();
+        }
+        ssTables.clear();
+        ssTableCounter++;
+        String filename = "sstable_" + ssTableCounter + ".txt";
+        SSTable newSSTable = new SSTable(filename);
+        newSSTable.flush(merged);
+        ssTables.add(newSSTable);
+        System.out.println("[LSMStore] Compacted into " + filename 
+        + " with " + merged.size() + " entries");
+    }
+}
