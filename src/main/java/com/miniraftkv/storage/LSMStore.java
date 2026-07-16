@@ -17,3 +17,10 @@ public class LSMStore {
         this.memTable = new MemTable(maxMemTableSize);
         this.ssTables = new ArrayList<>();
     }
+    
+    public void put(String key, String value) {
+        memTable.put(key, value);
+        if (memTable.isFull()) {
+            flush();
+        }
+    }
