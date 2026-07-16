@@ -24,3 +24,12 @@ public class LSMStore {
             flush();
         }
     }
+
+    private void flush() {
+        ssTableCounter++;
+        String filename = "sstable_" + ssTableCounter + ".txt";
+        SSTable ssTable = new SSTable(filename);
+        ssTable.flush(memTable.getAll());
+        ssTables.add(ssTable);
+        memTable.clear();
+    }
