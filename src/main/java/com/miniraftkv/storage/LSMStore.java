@@ -11,3 +11,9 @@ public class LSMStore {
     private List<SSTable> ssTables;
     private int maxMemTableSize;
     private int ssTableCounter = 0;
+
+    public LSMStore(int maxMemTableSize) {
+        this.maxMemTableSize = maxMemTableSize;
+        this.memTable = new MemTable(maxMemTableSize);
+        this.ssTables = new ArrayList<>();
+    }
