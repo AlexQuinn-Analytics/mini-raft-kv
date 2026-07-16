@@ -54,4 +54,24 @@ public class SSTable {
      public String getFilename() {
         return filename;
     }
+
+    public Map<String, String> readAll() {
+        Map<String, String> result = new TreeMap<>();
+        try {
+            File file = new File(filename);
+            if (!file.exists()) {
+                return result;
+            }
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                String[] parts = line.split("=", 2);
+                result.put(parts[0], parts[1]);
+            }
+            reader.close();
+        } catch (Exception e) {
+            System.out.println("[SSTable] ReadAll failed: " + e.getMessage());
+        }
+        return result;
+    }
 }
