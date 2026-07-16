@@ -33,3 +33,17 @@ public class LSMStore {
         ssTables.add(ssTable);
         memTable.clear();
     }
+
+    public String get(String key) {
+        String value = memTable.get(key);
+        if (value != null) {
+            return value;
+        }
+        for (int i = ssTables.size() - 1; i >= 0; i--) {
+            value = ssTables.get(i).get(key);
+            if (value != null) {
+                return value;
+            }
+        }
+        return null;
+    }
