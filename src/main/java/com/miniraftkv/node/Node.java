@@ -70,7 +70,7 @@ public class Node {
         if (electionTimer!=null){
             electionTimer.cancel(false);
         }
-        int timeout = 800 + random.nextInt(800);
+        int timeout = 3000 + random.nextInt(3000);
         electionTimer = scheduler.schedule(
             ()->startElection(),
             timeout,
