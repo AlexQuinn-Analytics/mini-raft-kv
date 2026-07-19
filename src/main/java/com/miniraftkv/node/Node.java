@@ -17,6 +17,7 @@ import com.miniraftkv.rpc.RaftClient;
 import com.miniraftkv.rpc.RaftServiceImpl;
 import com.miniraftkv.rpc.RequestVoteResponse;
 import com.miniraftkv.state.NodeState;
+import com.miniraftkv.storage.LSMStore;
 
 import io.grpc.Server;
 import io.grpc.ServerBuilder;
