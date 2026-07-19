@@ -303,6 +303,10 @@ public class Node {
         appendCommand(command);
         return true;
     }
+
+    public String getValue(String key) {
+        return lsmStore.get(key);
+    }
     
     public static void main(String[] args) throws IOException, InterruptedException {
 
