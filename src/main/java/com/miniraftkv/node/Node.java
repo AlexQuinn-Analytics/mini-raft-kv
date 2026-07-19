@@ -13,6 +13,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.TimeUnit;
 
+import com.miniraftkv.log.LogEntry;
+import com.miniraftkv.rpc.AppendEntriesResponse;
 import com.miniraftkv.rpc.RaftClient;
 import com.miniraftkv.rpc.RaftServiceImpl;
 import com.miniraftkv.rpc.RequestVoteResponse;
