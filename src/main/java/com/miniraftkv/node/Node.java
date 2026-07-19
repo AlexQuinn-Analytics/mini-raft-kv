@@ -220,7 +220,7 @@ public class Node {
         String[] parts = command.split(" ");
         if (parts[0].equals("set")){
             String[] kv = parts[1].split("=");
-            kvStore.put(kv[0], kv[1]);
+            lsmStore.put(kv[0], kv[1]);
         }
     }
 
