@@ -309,7 +309,7 @@ public class Node {
     }
     
     public static void main(String[] args) throws IOException, InterruptedException {
-
+    // 1. Start 3 nodes
     Node node1 = new Node("Node1", 5001, Arrays.asList("localhost:5002", "localhost:5003"));
     Node node2 = new Node("Node2", 5002, Arrays.asList("localhost:5001", "localhost:5003"));
     Node node3 = new Node("Node3", 5003, Arrays.asList("localhost:5001", "localhost:5002"));
@@ -317,13 +317,44 @@ public class Node {
     node1.start();
     node2.start();
     node3.start();
-
     Thread.sleep(1000);
 
     node1.resetElectionTimer();
     node2.resetElectionTimer();
     node3.resetElectionTimer();
 
-    node1.blockUntilShutdown();
+    // 2. Wait for election
+    System.out.println(">>> STEP 1: waiting for election...");
+    Thread.sleep(10000);
+
+    // 3. Find the leader and send commands to it
+    System.out.println(">>> STEP 2: finding leader...");
+    Node[] nodes = {node1, node2, node3};
+    Node leader = null;
+    for (Node n : nodes) {
+        if (n.handleClientCommand("set x=5")) {
+            leader = n;
+            System.out.println(">>> STEP 3: leader accepted!");
+            break;
+        }
+    }
+
+    System.out.println(">>> STEP 4: after leader loop");
+    if (leader != null) {
+        leader.handleClientCommand("set y=10");
+    }
+
+    // 4. Wait for commit + apply
+    System.out.println(">>> STEP 5: sleeping 5s...");
+    Thread.sleep(5000);
+
+    // 5. Verify: read from LSM
+    System.out.println(">>> STEP 6: reading from LSM");
+    System.out.println("Node1: x = " + node1.getValue("x") + ", y = " + node1.getValue("y"));
+    System.out.println("Node2: x = " + node2.getValue("x") + ", y = " + node2.getValue("y"));
+    System.out.println("Node3: x = " + node3.getValue("x") + ", y = " + node3.getValue("y"));
+
+    System.out.println(">>> STEP 7: done");
+    System.exit(0);
     }
 }
