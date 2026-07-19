@@ -40,6 +40,7 @@ public class Node {
     private int commitIndex = 0;
     private Map<String, String> kvStore = new HashMap<>();
     private int lastApplied = 0;
+    private LSMStore lsmStore = new LSMStore(100);
 
     
     public Node(String nodeId, int port, List<String> peers) {
